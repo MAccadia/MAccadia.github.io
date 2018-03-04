@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <!-- See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html -->
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css">
+    <script src="markers.js"></script>
+    <style>
+    #image-map {
+      width: 100%;
+      height: 700px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="image-map"></div>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script>
+
+    // Using leaflet.js to pan and zoom a big image.
+    // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
+    // create the slippy map
+    var carte = L.map('image-map', {
+      minZoom: 0.7,
+      maxZoom: 4,
+      center: [0, 0],
+      zoom: 0.7,
+      crs: L.CRS.Simple
+    });
+    // dimensions of the image
+    var w = 4961,
+        h = 3508,
+        url = 'images/fond.jpg';
+    // calculate the edges of the image, in coordinate space
+    var southWest = carte.unproject([0, h], carte.getMaxZoom()-1);
+    var northEast = carte.unproject([w, 0], carte.getMaxZoom()-1);
+    var bounds = new L.LatLngBounds(southWest, northEast);
+
+    /* needs a markers array defined e.g.
+    var markers = [
+    {
+      lat: -438.5,
+      lng: 500,
+      popup: "<p>hello</p>"
+    },
+    {
+      lat: -97,
+      lng: 156,
+      popup: "<p>World</p>"
+    }];
+    */
+    var marker = null
+    for (var i = 0; i < markers.length; i++) {
+      marker = L.marker(markers[i]).addTo(carte);
+      marker.bindPopup(markers[i].popup, { minWidth: 200, keepInView: true})
+    }
+
+
+    /*var marker = L.marker(southWest).addTo(carte);
+    var marker = L.marker({ lat: -438.5, lng: 500 }).addTo(carte);
+    var marker = L.marker({ lat: -97, lng: 156 }).addTo(carte);
+*/
+
+    carte.on('contextmenu', function(e) {
+        alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+    });
+    // add the image overlay,
+    // so that it covers the entire map
+    L.imageOverlay(url, bounds).addTo(carte);
+    // tell leaflet that the map is exactly as big as the image
+    carte.setMaxBounds(bounds);
+
+    </script>
+
+  </body>
+</html>
