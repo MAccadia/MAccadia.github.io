@@ -39,6 +39,29 @@
       var image = L.imageOverlay('images/fond.jpg', bounds).addTo(map);
       map.fitBounds(bounds);
 
+      // Custom icons
+      var blueIcon = L.icon({
+        iconUrl:       'leaflet/images/marker-icon.png',
+        iconRetinaUrl: 'leaflet/images/marker-icon-2x.png',
+        shadowUrl:     'leaflet/images/marker-shadow.png',
+        iconSize:    [25, 41],
+        iconAnchor:  [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize:  [41, 41]
+      });
+
+      var redIcon = L.icon({
+        iconUrl:       'leaflet/images/marker-icon_red.png',
+        iconRetinaUrl: 'leaflet/images/marker-icon-2x-red.png',
+        shadowUrl:     'leaflet/images/marker-shadow.png',
+        iconSize:    [25, 41],
+        iconAnchor:  [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize:  [41, 41]
+      });
+
       // Adding markers
       // needs a markers array defined e.g.
       /*
@@ -57,12 +80,12 @@
       var plantList = [];
       var placeList = [];
 
-      plantList = plants.map(customMarker => {
-        return L.marker(customMarker).bindPopup(customMarker.popup, { minWidth: 200 })
+      plantList = plants.map(customMarker => { // Javascript array.map()
+        return L.marker(customMarker, {icon: blueIcon}).bindPopup(customMarker.popup, { minWidth: 200})
       });
 
-      placeList = places.map(customMarker => {
-        return L.marker(customMarker).bindPopup(customMarker.popup, { minWidth: 200})
+      placeList = places.map(customMarker => { // Javascript array.map()
+        return L.marker(customMarker, {icon: redIcon}).bindPopup(customMarker.popup, { minWidth: 200})
       });
 
       var plantLayerGroup = L.layerGroup(plantList);
