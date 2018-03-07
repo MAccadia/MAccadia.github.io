@@ -74,6 +74,7 @@
       };
 
       L.control.layers(null, overlayMaps).addTo(map);
+      L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
 
       // A way to get leaflet coordinates with right click
       map.on('contextmenu', function(e) {
