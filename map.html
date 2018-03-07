@@ -71,6 +71,7 @@
       var overlayMaps = {
         "Plantes": plantLayerGroup.addTo(map),
         "Aménagements": placeLayerGroup
+        "Aménagements": placeLayerGroup.addTo(map)
       };
 
       L.control.layers(null, overlayMaps).addTo(map);
