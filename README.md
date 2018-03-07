@@ -1,8 +1,10 @@
 # An interactive map with a picture & leafletjs
 
-[View](maccadia.github.io/map.html)
+[Demo](maccadia.github.io/map.html)
+[Browse code](https://github.com/MAccadia/maccadia.github.io/)
 
-Based on : [Using leaflet.js to pan and zoom a big image](https://gist.github.com/longhotsummer/ba9c96bb2abb304e4095ce00df17ae2f)
+
+Based on LeafletJS official tutorial : [Non-geographical maps](http://leafletjs.com/examples/crs-simple/crs-simple.html)
 
 ## Adding a markers
 
