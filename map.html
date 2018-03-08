@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="leaflet/leaflet.css">
     <script src="leaflet/leaflet.js"></script>
+    <script src="papaparse.min.js"></script>
     <script src="markers.js"></script>
     <style>
       body {
@@ -35,6 +36,19 @@
     <div id="fullscreen_btn"><input type="button" value="Plein écran" onclick="toggleFullScreen()"></div>
 
     <script>
+      /* Loading data from CSV for markers */
+      csv="data/plantes.csv";
+      Papa.parse(csv, {
+  	       download: true,
+           encoding: "UTF-8",
+           header: true,
+  	       dynamicTyping: true,
+           skipEmptyLines: true,
+           complete: function(results) {
+  		         addMarkers(results.data);
+  	       }
+       });
+
       // Using leaflet.js with a simple image
       // Tutorial : http://leafletjs.com/examples/crs-simple/crs-simple.html
       var map = L.map('image-map', {
@@ -73,41 +87,44 @@
         shadowSize:  [41, 41]
       });
 
-      // Adding markers
-      // needs a markers array defined e.g.
-      /*
-      var markers = [
-      {
-        lat: -438.5,
-        lng: 500,
-        popup: "<p>hello</p>"
-      },
-      {
-        lat: -97,
-        lng: 156,
-        popup: "<p>World</p>"
-      }];
-      */
-      var plantList = [];
-      var placeList = [];
+      function addMarkers(data) {
+        // Adding markers
+        // needs a markers array defined e.g.
+        /*
+        var markers = [
+        {
+          lat: -438.5,
+          lng: 500,
+          popup: "<p>hello</p>"
+        },
+        {
+          lat: -97,
+          lng: 156,
+          popup: "<p>World</p>"
+        }];
+        */
+        var plantList = [];
+        var placeList = [];
 
-      plantList = plants.map(customMarker => { // Javascript array.map()
-        return L.marker(customMarker, {icon: blueIcon}).bindPopup(customMarker.popup, { minWidth: 200})
-      });
+        plantList = data.map(customMarker => { // Javascript array.map()
+          return L.marker(customMarker, {icon: blueIcon}).bindPopup(customMarker.popup, { minWidth: 200})
+        });
 
-      placeList = places.map(customMarker => { // Javascript array.map()
-        return L.marker(customMarker, {icon: redIcon}).bindPopup(customMarker.popup, { minWidth: 200})
-      });
+        placeList = places.map(customMarker => { // Javascript array.map()
+          return L.marker(customMarker, {icon: redIcon}).bindPopup(customMarker.popup, { minWidth: 200})
+        });
 
-      var plantLayerGroup = L.layerGroup(plantList);
-      var placeLayerGroup = L.layerGroup(placeList);
+        var plantLayerGroup = L.layerGroup(plantList);
+        var placeLayerGroup = L.layerGroup(placeList);
 
-      var overlayMaps = {
-        "Plantes": plantLayerGroup.addTo(map),
-        "Aménagements": placeLayerGroup.addTo(map)
+        var overlayMaps = {
+          "Plantes": plantLayerGroup.addTo(map),
+          "Aménagements": placeLayerGroup.addTo(map)
+        };
+
+        L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
+
       };
-
-      L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
 
       // A way to get leaflet coordinates with right click
       map.on('contextmenu', function(e) {
