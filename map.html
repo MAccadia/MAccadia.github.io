@@ -37,7 +37,7 @@
 
     <script>
       /* Loading data from CSV for markers */
-      csv="data/plantes.csv";
+      csv="data/markers.csv";
       Papa.parse(csv, {
   	       download: true,
            encoding: "UTF-8",
@@ -103,23 +103,34 @@
           popup: "<p>World</p>"
         }];
         */
-        var plantList = [];
-        var placeList = [];
+        var overlayMaps = {};
+        var types = [
+          {
+            name: "Aménagements",
+            icon: blueIcon
+          },
+          {
+            name: "Plantes",
+            icon: redIcon
+          },
+          {
+            name: "Arbres",
+            icon: redIcon
+          }
+        ]
 
-        plantList = data.map(customMarker => { // Javascript array.map()
-          return L.marker(customMarker, {icon: blueIcon}).bindPopup(customMarker.popup, { minWidth: 200})
-        });
+        
+        for ( var i in types ){
+          var markers = [];
 
-        placeList = places.map(customMarker => { // Javascript array.map()
-          return L.marker(customMarker, {icon: redIcon}).bindPopup(customMarker.popup, { minWidth: 200})
-        });
+          markers = data.filter(l => l.type == types[i].name).map(customMarker => { // Javascript array.map()
+            return L.marker(customMarker, {icon: types[i].icon}).bindPopup(customMarker.popup, { minWidth: 200})
+          });
 
-        var plantLayerGroup = L.layerGroup(plantList);
-        var placeLayerGroup = L.layerGroup(placeList);
+          var LayerGroup = L.layerGroup(markers);
 
-        var overlayMaps = {
-          "Plantes": plantLayerGroup.addTo(map),
-          "Aménagements": placeLayerGroup.addTo(map)
+
+          overlayMaps[ types[i].name ] = LayerGroup.addTo(map);
         };
 
         L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
