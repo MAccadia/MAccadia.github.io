@@ -1,7 +1,7 @@
 # An interactive map with a picture & leafletjs
 
-[Demo](maccadia.github.io/map.html)
-[Browse code](https://github.com/MAccadia/maccadia.github.io/)
+* [Demo](maccadia.github.io/map.html)
+* [Browse code](https://github.com/MAccadia/maccadia.github.io/)
 
 
 Based on LeafletJS official tutorial : [Non-geographical maps](http://leafletjs.com/examples/crs-simple/crs-simple.html)
