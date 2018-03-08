@@ -105,23 +105,28 @@
       var image = L.imageOverlay('images/fond.jpg', bounds).addTo(map);
       map.fitBounds(bounds);
 
-
+      // functions used in addMarkers below
+      Array.prototype.filterType = function(type_name){
+        return this.filter(l => l.type == type_name);
+      };
+      Array.prototype.toMarkers = function(custom_icon){
+        return this.map(customMarker => { return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
+      };
 
       // Adding markers to leaflet map
       function addMarkers(data) {
         var overlayMaps = {}; // will contain layers of markers
 
-        for ( var i in types ){
-          var markers = [];
+        for (var i = 0; i < types.length; i++){ // looping through predefined types
 
-          markers = data.filter(l => l.type == types[i].name).map(customMarker => { // Javascript array.map()
-            return L.marker(customMarker, {icon: types[i].icon}).bindPopup(customMarker.popup, { minWidth: 200})
-          });
+          var markers = [];
+          var type = types[i];
+
+          markers = data.filterType(type.name).toMarkers(type.icon);
 
           var LayerGroup = L.layerGroup(markers);
 
-
-          overlayMaps[ types[i].name ] = LayerGroup.addTo(map);
+          overlayMaps[ type.name ] = LayerGroup.addTo(map); // add layer with markers to overlayMaps
         };
 
         L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
