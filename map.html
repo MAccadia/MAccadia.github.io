@@ -20,20 +20,27 @@
       .leaflet-container {
         background: white;
       }
-
+      .btn {
+        z-index: 2;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        border-radius: 5px;
+      }
       #fullscreen_btn {
         position: absolute;
         right: 20px;
         bottom: 30px;
-        z-index: 2;
-        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-        border-radius: 5px;
+      }
+      #search_btn {
+        position: absolute;
+        right: 20px;
+        bottom: 60px;
       }
     </style>
   </head>
   <body>
     <div id="image-map"></div>
-    <div id="fullscreen_btn"><input type="button" value="Plein écran" onclick="toggleFullScreen()"></div>
+    <div id="fullscreen_btn" class="btn"><input type="button" value="Plein écran" onclick="toggleFullScreen()"></div>
+    <div id="search_btn" class="btn"><input type="button" value="Search" onclick="searchMarkers()"></div>
 
     <script>
     // Using leaflet.js with a simple image
