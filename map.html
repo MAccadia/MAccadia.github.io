@@ -110,8 +110,9 @@
        ]
 
       // functions used in addMarkers below
-      Array.prototype.filterType = function(type_name){
-        return this.filter(l => l.type == type_name);
+      Array.prototype.filterProp = function(prop, term){
+        // return an array of object where obj.prop == term
+        return this.filter(obj => obj[ prop ] == term);
       };
       Array.prototype.toMarkers = function(custom_icon){
         return this.map(customMarker => { return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
@@ -120,12 +121,13 @@
       // Adding markers to leaflet map
       function addMarkers(data) {
 
-        for (var i = 0; i < types.length; i++){ // looping through predefined types
+        // Add markers from dataset
+        for (var i = 0; i < types.length; i++){ // for each marker type
 
           var markers = [];
           var type = types[i];
 
-          markers = data.filterType(type.name).toMarkers(type.icon);
+          markers = data.filterProp("type", type.name).toMarkers(type.icon);
 
           var LayerGroup = L.layerGroup(markers);
 
