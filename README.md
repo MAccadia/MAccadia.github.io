@@ -11,3 +11,7 @@ Based on LeafletJS official tutorial : [Non-geographical maps](http://leafletjs.
 1. Get the position of your marker with right click on the map.
 
 2. Edit markers.js to add your marker.
+
+## TODO
+ - [ ] responsive
+ - [ ] search marker by name
