@@ -40,10 +40,7 @@
   <body>
     <div id="search" class="widget">
       <select id="search_selector">
-        <option selected value="">-- Rechercher --</option>
-        <option value="Rucher">Rucher</option>
-        <option value="Figuier">Figuier</option>
-        <option value="Artichaud">Artichaud</option>
+        <option value="">-- Rechercher --</option>
       </select>
     </div>
     <div id="image-map"></div>
@@ -161,6 +158,25 @@
           return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
       };
 
+      function enableSearch(data){
+        // Enable search in markers
+        var searchSelector = document.getElementById("search_selector")
+        searchTerms = new Set(data.map(x => x.name).sort());
+
+        var searchSelectorInnerHTML = '<option selected value="">-- Rechercher --</option>\n';
+
+        searchTerms.forEach(function(term) {
+          searchSelectorInnerHTML += '<option value="'+ term + '">'+ term + '</option>\n';
+        });
+
+        searchSelector.innerHTML = searchSelectorInnerHTML;
+
+        searchSelector.addEventListener("change", function(){
+          searchMarkers(searchSelector.value,data);
+        });
+
+      };
+
       // Adding markers to leaflet map
       function addMarkers(data) {
 
@@ -178,11 +194,7 @@
           controls.addOverlay(LayerGroup, type.name).addTo(map); // add overlay to controls
         };
 
-        // Enable search in markers
-        var searchSelector = document.getElementById("search_selector")
-        searchSelector.addEventListener("change", function(){
-          searchMarkers(searchSelector.value,data);
-        });
+        enableSearch(data);
 
       };
 
