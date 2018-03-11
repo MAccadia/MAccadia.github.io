@@ -10,9 +10,9 @@ Based on LeafletJS official tutorial : [Non-geographical maps](http://leafletjs.
 
 1. Get the position of your marker with right click on the map.
 
-2. Edit markers.js to add your marker.
+2. Edit markers.csv to add your marker.
 
 ## TODO
  - [ ] support defining markers types in CSV
- - [ ] responsive
+ - [x] responsive
  - [x] search marker by name
