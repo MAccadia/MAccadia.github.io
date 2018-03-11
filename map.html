@@ -40,7 +40,7 @@
   <body>
     <div id="image-map"></div>
     <div id="fullscreen_btn" class="btn"><input type="button" value="Plein écran" onclick="toggleFullScreen()"></div>
-    <div id="search_btn" class="btn"><input type="button" value="Search" onclick="searchMarkers()"></div>
+    <div id="search_btn" class="btn"><input type="button" value="Search"></div>
 
     <script>
     // Using leaflet.js with a simple image
@@ -117,7 +117,17 @@
            name: "Arbres",
            icon: redIcon
          }
-       ]
+       ];
+
+       // Search in data set
+       function searchMarkers(marker_name, data) {
+           console.log(data.filterProp("name", marker_name));
+
+           // Create layer with search results
+           var search_results = data.filterProp("name", marker_name).toMarkers(redIcon);
+           var LayerGroup = L.layerGroup(search_results);
+           controls.addOverlay(LayerGroup, "Recherche").addTo(map);
+         };
 
       // functions used in addMarkers below
       Array.prototype.filterProp = function(prop, term){
@@ -146,6 +156,8 @@
           controls.addOverlay(LayerGroup, type.name).addTo(map); // add overlay to controls
         };
 
+        // Enable search in markers
+        document.getElementById("search_btn").addEventListener("click", function(){searchMarkers("Rucher",data);});
 
       };
 
@@ -153,6 +165,7 @@
       map.on('contextmenu', function(e) {
           alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
       });
+
 
       // Toggle fullscreen
       function toggleFullScreen() {
@@ -174,7 +187,7 @@
             document.webkitCancelFullScreen();
           }
         }
-      }
+      };
     </script>
 
   </body>
