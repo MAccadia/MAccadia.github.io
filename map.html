@@ -63,7 +63,7 @@
     });
 
     // Control box / interactive legend
-    var controls = L.control.layers(null,null, {collapsed: false});
+    var controls = L.control.layers(null,null);
 
     // Search box
 
@@ -215,6 +215,9 @@
           controls.addOverlay(LayerGroup, type.name).addTo(map); // add overlay to controls
         };
         enableSearch(data);
+
+        // expand controls on big screens
+        if (document.getElementById("image-map").offsetWidth > 960) {controls.expand();};
       };
 
       // A way to get leaflet coordinates with right click
@@ -244,6 +247,8 @@
           }
         }
       };
+
+
     </script>
 
   </body>
