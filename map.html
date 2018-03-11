@@ -125,7 +125,8 @@
         return this.filter(obj => obj[ prop ] == term);
       };
       Array.prototype.toMarkers = function(custom_icon){
-        return this.map(customMarker => { return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
+        return this.map(customMarker => {
+          return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
       };
 
       // Adding markers to leaflet map
