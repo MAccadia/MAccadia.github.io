@@ -51,6 +51,9 @@
       crs: L.CRS.Simple
     });
 
+    // Control box / interactive legend
+    var controls = L.control.layers(null,null, {collapsed: false});
+
     // overlayMaps will contain layers of markers
     var overlayMaps = {};
 
@@ -139,9 +142,9 @@
           var LayerGroup = L.layerGroup(markers);
 
           overlayMaps[ type.name ] = LayerGroup.addTo(map); // add layer with markers to overlayMaps
+          controls.addOverlay(LayerGroup, type.name).addTo(map); // add overlay to controls
         };
 
-        L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
 
       };
 
