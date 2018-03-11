@@ -16,9 +16,17 @@
           width: 100%;
           z-index: 1;
       }
-
       .leaflet-container {
         background: white;
+      }
+      .leaflet-control-layers-expanded {
+        width : 150px;
+      }
+      .search {
+        width: 150px;
+        padding: 6px  10px 6px 6px;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        border-radius: 5px;
       }
       .widget {
         z-index: 2;
@@ -29,22 +37,21 @@
         position: absolute;
         right: 20px;
         bottom: 30px;
+        background-image: url("images/icon-fullscreen.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 2em;
+        height: 2em;
       }
-      #search {
-        position: absolute;
-        right: 20px;
-        bottom: 90px;
+      #search_selector {
+        width: 100%;
       }
+
     </style>
   </head>
   <body>
-    <div id="search" class="widget">
-      <select id="search_selector">
-        <option value="">-- Rechercher --</option>
-      </select>
-    </div>
     <div id="image-map"></div>
-    <div id="fullscreen_btn" class="widget"><input type="button" value="Plein écran" onclick="toggleFullScreen()"></div>
+    <div id="fullscreen_btn" class="widget" onclick="toggleFullScreen()"></div>
 
     <script>
     // Using leaflet.js with a simple image
@@ -57,6 +64,20 @@
 
     // Control box / interactive legend
     var controls = L.control.layers(null,null, {collapsed: false});
+
+    // Search box
+
+    var searchBox = L.control({position:'topright'});
+    searchBox.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'search'); // create a div with a class "search"
+      selectorHTML = '<select  id="search_selector">\n<option value="">-- Rechercher --</option>\n</select>';
+      this._div.innerHTML = selectorHTML;
+      return this._div;
+    };
+  searchBox.addTo(map);
+
+
+
 
     // overlayMaps will contain layers of markers
     var overlayMaps = {};
@@ -193,9 +214,7 @@
           overlayMaps[ type.name ] = LayerGroup.addTo(map); // add layer with markers to overlayMaps
           controls.addOverlay(LayerGroup, type.name).addTo(map); // add overlay to controls
         };
-
         enableSearch(data);
-
       };
 
       // A way to get leaflet coordinates with right click
