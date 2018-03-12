@@ -1,6 +1,6 @@
 # An interactive map with a picture & leafletjs
 
-* [Demo](maccadia.github.io/map.html)
+* [Demo](https://maccadia.github.io/map.html)
 * [Browse code](https://github.com/MAccadia/maccadia.github.io/)
 
 
