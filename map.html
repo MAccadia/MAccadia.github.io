@@ -157,16 +157,20 @@
 
        // Search in data set
        function searchMarkers(marker_name, data) {
-           console.log(data.filterProp("name", marker_name));
+         // De-zoom
+         map.fitBounds(bounds);
 
-          var d = document.getElementById("search_selector");
-          console.log(d);
+          // Create layer with search results
+          var search_results = data.filterProp("name", marker_name).toMarkers(redIcon);
+          var LayerGroup = L.layerGroup(search_results).addTo(map);
 
+          // Remove previous searchs from map.
+          for (var i = 0; i < controls._layers.length; i++) {
+            var layergroup = controls._layers[i]
+            if (layergroup.name.includes("Recherche")) { layergroup.layer.removeFrom(map);};
+          };
 
-           // Create layer with search results
-           var search_results = data.filterProp("name", marker_name).toMarkers(redIcon);
-           var LayerGroup = L.layerGroup(search_results).addTo(map);
-           controls.addOverlay(LayerGroup, marker_name).addTo(map);
+          controls.addOverlay(LayerGroup, "Recherche : " + marker_name);
          };
 
       // functions used in addMarkers below

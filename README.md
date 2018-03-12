@@ -14,5 +14,5 @@ Based on LeafletJS official tutorial : [Non-geographical maps](http://leafletjs.
 
 ## TODO
  - [ ] support defining markers types in CSV
- - [x] responsive
+ - [x] small screen support
  - [x] search marker by name
