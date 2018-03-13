@@ -21,6 +21,9 @@
       .leaflet-control-layers-expanded {
         width : 150px;
       }
+      .leaflet-popup-content-wrapper h3 {
+        text-align: center;
+      }
       .search {
         width: 150px;
         padding: 6px  10px 6px 6px;
@@ -179,7 +182,7 @@
       };
       Array.prototype.toMarkers = function(custom_icon){
         return this.map(customMarker => {
-          return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 200})});
+          return L.marker(customMarker, {icon: custom_icon}).bindPopup(customMarker.popup, { minWidth: 150})});
       };
 
       function enableSearch(data){
